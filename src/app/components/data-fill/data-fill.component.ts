@@ -126,6 +126,7 @@ export class DataFillComponent {
       profilePicture: this.personalForm.value.profilePicture
     };
     this.personals.push(personal);
+    this.scrollToTop();
     this.nextStep() 
     // Optionally, you can clear the form fields after submission
      
@@ -151,6 +152,15 @@ export class DataFillComponent {
   addTitle(){
   this.openstartModal = false;
 
+  }
+  scrollToTop() {
+    (function smoothscroll() {
+      var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      if (currentScroll > 0) {
+        window.requestAnimationFrame(smoothscroll);
+        window.scrollTo(0, currentScroll - (currentScroll / 8));
+      }
+    })();
   }
 
 }
