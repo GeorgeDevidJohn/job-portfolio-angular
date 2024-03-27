@@ -137,8 +137,6 @@ export class DataFillComponent {
   }
 
 
- 
-
   nextStep() {
     this.currentStep ++;
   }

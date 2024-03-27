@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {  FormsModule,
   NgForm,
   ReactiveFormsModule,
@@ -11,7 +11,8 @@ import {  FormsModule,
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule,RouterOutlet,RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoginComponent {
 
