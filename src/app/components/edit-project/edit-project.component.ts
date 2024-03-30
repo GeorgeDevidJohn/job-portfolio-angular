@@ -1,30 +1,45 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { FormsModule,
   NgForm,
   ReactiveFormsModule,
-  FormGroup,
-  FormControl,
-  Validators,} from '@angular/forms'; // Import FormsModule
-import { EducationComponent } from '../education/education.component';
-import { ExperianceComponent } from '../experiance/experiance.component';
-import { ProjectsComponent } from '../projects/projects.component';
-import { trigger, transition, animate, keyframes, style } from '@angular/animations';
-import { Router } from '@angular/router';
+ } from '@angular/forms';
+import { Component } from '@angular/core';
+import { trigger, transition, animate, keyframes, style, state } from '@angular/animations';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EducationComponent } from '../edit-forms/education/education.component';
+import { ProjectsComponent } from '../edit-forms/projects/projects.component';
+import { ExperianceComponent } from '../edit-forms/experiance/experiance.component';
+
 @Component({
-  selector: 'app-data-fill',
+  selector: 'app-edit-project',
   standalone: true,
-  imports: [CommonModule,FormsModule,EducationComponent,ExperianceComponent,ProjectsComponent,FormsModule, ReactiveFormsModule],
-  templateUrl: './data-fill.component.html',
-  styleUrl: './data-fill.component.css',
+  imports: [CommonModule,FormsModule,EducationComponent,ExperianceComponent,ProjectsComponent,FormsModule, ReactiveFormsModule,ColorPickerModule],
+  templateUrl: './edit-project.component.html',
+  styleUrl: './edit-project.component.css',
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   animations: [
     trigger('slideIn', [
       transition('void => *', [
         style({ transform: 'translateX(-100%)' }),
         animate('500ms ease-in', style({ transform: 'translateX(0)' }))
+      ]),
+      transition('* => void', [
+        animate('500ms ease-out', style({ transform: 'translateX(-100%)' }))
       ])
     ]),
+    trigger('slideUpAnimation', [
+      transition('void => *', [
+        style({ transform: 'translateY(100%)' }),
+        animate('1000ms ease-in', style({ transform: 'translateY(0)' }))
+      ]),
+      transition('* => void', [
+        animate('1000ms ease-out', style({ transform: 'translateY(-100%)' }))
+      ])
+    ]),
+   
+  
     trigger('bounceIn', [
       transition('void => *', [
         animate(1000, keyframes([
@@ -88,9 +103,22 @@ import { Router } from '@angular/router';
     ])
   ]
 })
-export class DataFillComponent {
-  openstartModal = true;
-  currentStep = 1;
+export class EditProjectComponent {
+ 
+  showNav = false;
+  setCurrentSection = 1;
+  showDiv = true;
+  openSide(){
+    this.showNav = !this.showNav;
+  }
+  valueSide(num: number){
+   this.setCurrentSection = num;
+    this.showNav = false;
+  }
+
+  hideDiv(){
+    this.showDiv = false;
+  }
   personalForm = new FormGroup({
     lastName : new FormControl('', [Validators.required]),
     firstName : new FormControl('', [Validators.required]),
@@ -103,29 +131,13 @@ export class DataFillComponent {
     linkedinLink: new FormControl(''),
     profilePicture: new FormControl(null),
   });
-  personals: any[] = [];
-  titleForm = new FormGroup({
-    jobTitle : new FormControl('',[Validators.required])
+
+  themeForm = new FormGroup({
+   url : new FormControl('', [Validators.required]),
+   theme : new FormControl('', [Validators.required]),
   })
+
  
-
-
-
-  constructor(private router: Router) { }
- 
-  ngOnInit() {
-  }
- 
-  addFinal(){
-    const theme = {
-      url: this.themeForm.value.url,
-      tehem: this.themeForm.value.theme,
-      
-    };
-   
-  
-
-  }
   addPersonal(){
 
     const personal = {
@@ -140,45 +152,23 @@ export class DataFillComponent {
       address: this.personalForm.value.address,
       profilePicture: this.personalForm.value.profilePicture
     };
-    this.personals.push(personal);
-    this.scrollToTop();
-    this.nextStep() 
+   
+   
     // Optionally, you can clear the form fields after submission
      
   }
 
-  fillInput(value: string) {
-    this.titleForm.get('jobTitle')?.setValue(value);
-  }
-
-  themeForm = new FormGroup({
-    url : new FormControl('', [Validators.required]),
-    theme : new FormControl('', [Validators.required]),
-   })
- 
-
-  nextStep() {
-    this.currentStep ++;
-  }
-
-  previousStep() {
-    if(this.currentStep >0){
-    this.currentStep--;
-    }
-  }
-
-  addTitle(){
-  this.openstartModal = false;
+  addFinal(){
+    const theme = {
+      url: this.themeForm.value.url,
+      tehem: this.themeForm.value.theme,
+      
+    };
+   
+  
 
   }
-  scrollToTop() {
-    (function smoothscroll() {
-      var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      if (currentScroll > 0) {
-        window.requestAnimationFrame(smoothscroll);
-        window.scrollTo(0, currentScroll - (currentScroll / 8));
-      }
-    })();
-  }
+
+
 
 }

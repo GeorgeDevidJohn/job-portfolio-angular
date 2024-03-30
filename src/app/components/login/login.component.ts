@@ -5,7 +5,7 @@ import {  FormsModule,
   FormGroup,
   FormControl,
   Validators, } from '@angular/forms';
-  import { RouterOutlet,RouterLink } from '@angular/router';
+  import { RouterOutlet,RouterLink, Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -16,13 +16,21 @@ import {  FormsModule,
 })
 export class LoginComponent {
 
+  constructor(private router: Router) { }
+ 
+  ngOnInit() {
+  }
+ 
+   onSubmit() {
+   this.router.navigate(['/data']);
+   
+  }
+
   loginform = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required]),
   });
-  onSubmit() {
-   //API HERE
-  }
+ 
 
 }
