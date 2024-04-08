@@ -16,6 +16,11 @@ export class NavigationComponent {
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
+
+
+
+
+  
 }
 
 

@@ -13,9 +13,13 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
    { path: 'login', component: LoginComponent },
   { path: 'data', component: DataFillComponent },
-  {path: 'home', component: HomeComponent},
-  {path: 'projects', component: ProjectListComponent},
-  {path: 'projectsdetails', component: ProjectDetailsComponent},
   {path: 'edit', component: EditProjectComponent},
-  {path: 'resume', component: ResumeComponent} 
+  {path:'home',component:HomeComponent},
+  {
+  path: ':userurl',
+  component: ResumeComponent,
+  },
+    { path: 'projects/:userurl', component: ProjectListComponent },
+    { path: 'projectdetail/:projectdetail', component: ProjectDetailsComponent }
+
 ];

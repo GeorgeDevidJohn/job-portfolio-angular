@@ -276,7 +276,7 @@
                 id="summary"
                 class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
                 placeholder="Summary (Max 50 words)"
-                maxlength="50"
+                maxlength="300"
                 required=""
               ></textarea>
               @if(personalForm.get('summary')?.invalid &&
@@ -442,10 +442,10 @@
       [@slideIn] 
       class="max-w-6xl  sm:mx-auto  mx-4 mt-8 mb-8"
     >
-      <app-education />
+      <app-education #childRef (emitFunction)="saveEducation($event)"/>
 
       <button
-        (click)="nextStep()"
+        (click)="edunextStep()"
         class="text-white w-40 mt-8 bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
       >
         Next
@@ -453,13 +453,13 @@
     </div>
     <div
       *ngIf="currentStep === 3"
-      [@slideIn]
+      [@slideIn] 
       class="max-w-6xl sm:mx-auto  mx-4 mt-8 mb-8"
     >
-      <app-experiance />
+      <app-experiance  #childRefExp />
 
       <button
-        (click)="nextStep()"
+        (click)="expnextStep()"
         class="text-white w-40 mt-8 bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
       >
         Next
@@ -467,23 +467,23 @@
     </div>
     <div
       *ngIf="currentStep === 4"
-      [@slideIn]
+      [@slideIn] 
       class="max-w-6xl sm:mx-auto  mx-4 mt-8 mb-8"
     >
-      <app-projects />
+      <app-projects  #childRefProj/>
 
       <button
-        (click)="nextStep()"
+        (click)="pronextStep()"
         [disabled]=""
         class="text-white w-40 mt-8 bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
       >
-        Next
+        Next step
       </button>
     </div>
     <div *ngIf="currentStep === 5" [@slideIn] class="sm:w-[100%] sm:mx-auto  mx-4 mt-4 mb-8">
       <div >
         <div class="mx-auto max-w-7xl lg:px-8">
-          <form (ngSubmit)="addFinal()" [formGroup]="themeForm">
+          <form (ngSubmit)="addFinal()" [formGroup]="themeForm" >
             <div
               class="mx-auto mt-16 max-w-2xl bg-white rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none"
             >
@@ -517,8 +517,7 @@
                       <input
                         type="text"
                         name="url"
-                        ngModel
-                        #url="ngModel"
+                        formControlName="url"
                         id="url"
                         class="w-full rounded border bg-white px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
                         placeholder="sample-portfolio"
@@ -527,7 +526,7 @@
                     </div>
                   </li>
                   <br />
-                  @if(url.invalid && url.touched){<span class="text-red-600"
+                  @if(themeForm.get('url')?.invalid  && themeForm.get('url')?.touched){<span class="text-red-600"
                     >required</span
                   >}
                 </ul>
@@ -542,32 +541,32 @@
                     </p>
                     <div class="flex gap-4 themeselector">
                       <div>
-                        <input type="radio" name="theme" id="red" value="red" />
+                        <input type="radio" formControlName="theme" name="theme" id="red" value="red" required />
                         <label for="red"><span class="red"></span></label>
                       </div>
                       <div>
-                        <input type="radio" name="theme" id="green" />
+                        <input type="radio" name="theme" formControlName="theme" id="green" value="green" required/>
                         <label for="green"><span class="green"></span></label>
                       </div>
     
                       <div>
-                        <input type="radio" name="theme" id="orange" />
+                        <input type="radio" name="theme" formControlName="theme" id="orange" value="orange" required/>
                         <label for="orange"><span class="orange"></span></label>
                       </div>
                       <div>
-                        <input type="radio" name="theme" id="blue" />
+                        <input type="radio" name="theme" formControlName="theme" id="blue" value="blue"  required/>
                         <label for="blue"><span class="blue"></span></label>
                       </div>
                       <div>
-                        <input type="radio" name="theme" id="violet" />
+                        <input type="radio" name="theme" formControlName="theme" id="violet" value="violet"  required/>
                         <label for="violet"><span class="violet"></span></label>
                       </div>
                     </div>
     
-                    <a
-                      href="#"
-                      class="mt-10 block w-full rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                      >Submit</a
+                    <button
+                     [disabled]="!themeForm.valid"
+                     class="w-40 py-3 px-4 inline-flex justify-center gap-y-2 mt-4 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                     >Submit</button
                     >
                   </div>
                 </div>

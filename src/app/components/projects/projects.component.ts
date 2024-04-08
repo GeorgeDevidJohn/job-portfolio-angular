@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms'; // Import FormsModule
 import { CommonModule } from '@angular/common';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
+import { NavigationComponent } from '../navigation/navigation.component';
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,NavigationComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
   animations: [
@@ -66,6 +67,10 @@ clearProjectForm(){
 
 openProModal(){
   this.openModal = true;
+}
+
+getData(){
+  return this.projects;
 }
 closeProModal(){
   this.clearProjectForm();

@@ -10,10 +10,14 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DataService } from '../../../service/data.service';
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-experiance',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  providers:[DataService],
+  imports: [FormsModule,CommonModule,HttpClientModule,ReactiveFormsModule],
   templateUrl: './experiance.component.html',
   styleUrl: './experiance.component.css',
   animations: [
@@ -34,6 +38,7 @@ import {
   ]
 })
 export class ExperianceComponent {
+  constructor(private router: Router ,private _dataService: DataService) { }
   opemEditExpModalValue =false;
   openModal = false;
   experiences: any[] = [];
@@ -53,20 +58,27 @@ export class ExperianceComponent {
       companyendDate: form.value.companyendDate
     };
     this.experiences.push(experience);
-
+    this._dataService.updateExperience(this.experiences).subscribe((data) => console.log(data));
     // Optionally, you can clear the form fields after submission
     this.clearQualificationForm();
     this.closeExpModal();
   }
 
-  editQualification(form: NgForm){
+  expForm = new FormGroup({
+    position : new FormControl('', [Validators.required]),
+    companyName : new FormControl('', [Validators.required]),
+    companyaddress: new FormControl('', [Validators.required]),
+    companystartDate: new FormControl('', [Validators.required]),
+    companyendDate: new FormControl(''),
+  });
+  editQualification(){
 
     const experience = {
-      position: form.value.position,
-      companyName: form.value.companyName,
-      companyaddress: form.value.companyaddress,
-      companystartDate: form.value.companystartDate,
-      companyendDate: form.value.companyendDate
+      position: this.expForm.value.position,
+      companyName: this.expForm.value.companyName,
+      companyaddress: this.expForm.value.companyaddress,
+      companystartDate: this.expForm.value.companystartDate,
+      companyendDate: this.expForm.value.companyendDate
     };
     
 
@@ -90,7 +102,19 @@ export class ExperianceComponent {
     this.openModal = false;
     this.opemEditExpModalValue = false;
   }
-  openEditExpModal(){
+  openEditExpModal(experience : any){
+
+    this.patchExpForm(experience)
     this.opemEditExpModalValue = true;
+  }
+
+  patchExpForm(experience :any ){
+    this.expForm.patchValue({
+      position: experience.position,
+      companyName: experience.companyName,
+      companyaddress: experience.companyaddress,
+      companystartDate: experience.companystartDate,
+      companyendDate: experience.companyendDate
+    });
   }
 }

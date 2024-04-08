@@ -65,6 +65,9 @@ export class ExperianceComponent {
     this.companyendDate ='';
   }
 
+  getData(){
+    return this.experiences;
+  }
   openExpModal(){
     this.openModal = true;
   }

@@ -11,11 +11,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EducationComponent } from '../edit-forms/education/education.component';
 import { ProjectsComponent } from '../edit-forms/projects/projects.component';
 import { ExperianceComponent } from '../edit-forms/experiance/experiance.component';
+import { Router } from '@angular/router';
+import { DataService } from '../../service/data.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [CommonModule,FormsModule,EducationComponent,ExperianceComponent,ProjectsComponent,FormsModule, ReactiveFormsModule,ColorPickerModule],
+  providers:[DataService],
+  imports: [CommonModule,HttpClientModule,FormsModule,EducationComponent,ExperianceComponent,ProjectsComponent,FormsModule, ReactiveFormsModule,ColorPickerModule],
   templateUrl: './edit-project.component.html',
   styleUrl: './edit-project.component.css',
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
@@ -104,7 +108,7 @@ import { ExperianceComponent } from '../edit-forms/experiance/experiance.compone
   ]
 })
 export class EditProjectComponent {
- 
+  constructor(private router: Router ,private _dataService: DataService) { }
   showNav = false;
   setCurrentSection = 1;
   showDiv = true;
@@ -153,7 +157,7 @@ export class EditProjectComponent {
       profilePicture: this.personalForm.value.profilePicture
     };
    
-   
+    this._dataService.updatePersonals(personal).subscribe((data) => console.log(data));
     // Optionally, you can clear the form fields after submission
      
   }
@@ -161,11 +165,11 @@ export class EditProjectComponent {
   addFinal(){
     const theme = {
       url: this.themeForm.value.url,
-      tehem: this.themeForm.value.theme,
+      theam: this.themeForm.value.theme,
       
     };
    
-  
+    this._dataService.updateTheme(theme).subscribe((data) => console.log(data));
 
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { CommonModule } from '@angular/common';
@@ -42,6 +42,9 @@ export class EducationComponent {
   startDate: string = '';
   endDate: string = '';
 
+  @Output() addEdu: EventEmitter<any> =
+  new EventEmitter<any>();
+
   addEducation(form: NgForm){
     this.closeEduModal()
     const education = {
@@ -52,6 +55,7 @@ export class EducationComponent {
       endDate: this.endDate
     };
     this.educations.push(education);
+   
     // Optionally, you can clear the form fields after submission
     this.clearForm();
     this.closeEduModal();
@@ -70,5 +74,11 @@ export class EducationComponent {
   closeEduModal(){
     this.clearForm(); 
     this.openModal = false;
+  }
+  getData(){
+    return this.educations;
+  }
+  emitFunction() {
+    this.addEdu.emit(this.educations);
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormsModule,
   NgForm,
@@ -12,10 +12,13 @@ import { ExperianceComponent } from '../experiance/experiance.component';
 import { ProjectsComponent } from '../projects/projects.component';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { Router } from '@angular/router';
+import { DataService } from '../../service/data.service';
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-data-fill',
   standalone: true,
-  imports: [CommonModule,FormsModule,EducationComponent,ExperianceComponent,ProjectsComponent,FormsModule, ReactiveFormsModule],
+  providers:[DataService],
+  imports: [CommonModule,FormsModule,EducationComponent,HttpClientModule,ExperianceComponent,ProjectsComponent,FormsModule, ReactiveFormsModule],
   templateUrl: './data-fill.component.html',
   styleUrl: './data-fill.component.css',
   animations: [
@@ -89,8 +92,23 @@ import { Router } from '@angular/router';
   ]
 })
 export class DataFillComponent {
+  constructor(private router: Router ,private _dataService: DataService) { }
+  @ViewChild('childRef')
+  education!: EducationComponent;
+
+  @ViewChild('childRefExp')
+  experiance!: ExperianceComponent;
+
+  @ViewChild('childRefProj')
+  project!: ProjectsComponent;
+
   openstartModal = true;
   currentStep = 1;
+  
+  alldetails : any[] = [];
+  educationList: any[] = [];
+  projectsList: any[] = [];
+  experianceList:any[] = [];
   personalForm = new FormGroup({
     lastName : new FormControl('', [Validators.required]),
     firstName : new FormControl('', [Validators.required]),
@@ -107,24 +125,43 @@ export class DataFillComponent {
   titleForm = new FormGroup({
     jobTitle : new FormControl('',[Validators.required])
   })
+  title: string | null | undefined;
  
-
-
-
-  constructor(private router: Router) { }
+ 
+  
  
   ngOnInit() {
   }
  
   addFinal(){
+    console.log("its the end")
     const theme = {
       url: this.themeForm.value.url,
-      tehem: this.themeForm.value.theme,
-      
+      theam: this.themeForm.value.theme,      
     };
-   
-  
 
+    this.alldetails.push({"title" :this.title})
+    this.alldetails.push({"personals" : this.personals})  ;
+    this.alldetails.push({"projects" : this.projectsList}) ;
+    this.alldetails.push({"experiance" : this.experianceList});
+    this.alldetails.push({"education" : this.educationList});
+    this.alldetails.push({"theme": theme});
+  
+    console.log(this.alldetails)
+    
+    // Once alldetails is populated, you can call the service
+    this._dataService.addDetails(this.alldetails).subscribe(
+      (data) => {
+        console.log(data);
+        this.alldetails= [];
+        // Handle response if needed
+      },
+      (error) => {
+        console.error('Error:', error);
+        // Handle error if needed
+      }
+    );
+  
   }
   addPersonal(){
 
@@ -161,6 +198,22 @@ export class DataFillComponent {
     this.currentStep ++;
   }
 
+
+edunextStep() {
+  this.educationList = this.education.getData();
+  this.currentStep ++;
+}
+
+expnextStep(){
+  this.experianceList = this.experiance.getData();
+  this.currentStep ++;
+}
+
+pronextStep(){
+  this.projectsList = this.project.getData();
+  console.log(this.projectsList)
+  this.currentStep ++;
+}
   previousStep() {
     if(this.currentStep >0){
     this.currentStep--;
@@ -168,7 +221,13 @@ export class DataFillComponent {
   }
 
   addTitle(){
+  this.title =  this.titleForm.value.jobTitle;
+
   this.openstartModal = false;
+  }
+
+  saveEducation($event : any){
+    console.log($event)
 
   }
   scrollToTop() {
@@ -180,5 +239,7 @@ export class DataFillComponent {
       }
     })();
   }
+
+
 
 }

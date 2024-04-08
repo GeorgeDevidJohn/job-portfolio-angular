@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router'; // Only import Router from '@angular/router'
 import { NavigationComponent } from '../navigation/navigation.component';
+import { routes } from '../../app.routes';
+
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [RouterLink,RouterLinkActive, RouterOutlet,NavigationComponent],
+  imports:[NavigationComponent],
   templateUrl: './project-list.component.html',
-  styleUrl: './project-list.component.css'
+  styleUrls: ['./project-list.component.css'] // Correct the property name to 'styleUrls'
 })
 export class ProjectListComponent {
 
+  constructor(private router: Router) { } // Correct the constructor spelling
+  
+  onViewProjectDetails() {
+    this.router.navigateByUrl('/projectdetail/sdhadh');
+  } 
 }
