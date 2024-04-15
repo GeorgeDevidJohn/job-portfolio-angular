@@ -139,18 +139,30 @@ export class DataFillComponent {
       url: this.themeForm.value.url,
       theam: this.themeForm.value.theme,      
     };
-
-    this.alldetails.push({"title" :this.title})
-    this.alldetails.push({"personals" : this.personals})  ;
-    this.alldetails.push({"projects" : this.projectsList}) ;
-    this.alldetails.push({"experiance" : this.experianceList});
-    this.alldetails.push({"education" : this.educationList});
-    this.alldetails.push({"theme": theme});
+  const resume = {
+      phone: this.personals[0].phone,
+      address: this.personals[0].address,
+      email: this.personals[0].email,
+      firstName: this.personals[0].firstName,
+      lastName: this.personals[0].lastName,
+      summary: this.personals[0].summary,
+      skills: this.personals[0].skills,
+      githubLink: this.personals[0].gitLink,
+      linkdinLink: this.personals[0].linkedinLink,
+      urlName: theme.url,
+      title : this.title,
+      themeColor: theme.theam,
+      profilePicLink: "",
+      educations: this.educationList,
+      experiences: this.experianceList,
+      projects: this.projectsList
+    };
+   
   
-    console.log(this.alldetails)
+    console.log(resume)
     
     // Once alldetails is populated, you can call the service
-    this._dataService.addDetails(this.alldetails).subscribe(
+    this._dataService.addDetails(resume).subscribe(
       (data) => {
         console.log(data);
         this.alldetails= [];

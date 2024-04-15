@@ -78,16 +78,16 @@
             >Address</label
           >
           <textarea
-            name="companyaddress"
+            name="address"
             id="summary"
             ngModel
-            #companyaddress="ngModel"
+            #address="ngModel"
             class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             placeholder="Address of the Company"
             maxlength="250"
             required=""
           ></textarea>
-          @if(companyaddress.invalid && companyaddress.touched){<span
+          @if(address.invalid && address.touched){<span
             class="text-red-600"
             >Address Required</span
           >}
@@ -99,16 +99,16 @@
             >Start Date</label
           >
           <input
-          #companystartDate="ngModel"
+          #startDate="ngModel"
             type="date"
             ngModel
-            name="companystartDate"
+            name="startDate"
             id="gitLink"
             class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             placeholder="Start Date"
             required=""
           />
-          @if(companystartDate.invalid && companystartDate.touched){<span
+          @if(startDate.invalid && startDate.touched){<span
             class="text-red-600"
             >Start Required</span
           >}
@@ -122,8 +122,8 @@
           <input
             type="date"
             ngModel
-            #companyendDate="ngModel"
-            name="companyendDate"
+            #endDate="ngModel"
+            name="endDate"
             id="linkedinLink"
             class="w-full rounded border bg-gray-100 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             placeholder="End Date"
@@ -165,13 +165,13 @@ class="center relative inline-block select-none whitespace-nowrap rounded-full b
 </div>
 <h3 class="font-bold"> {{experience.companyName}}</h3>
 <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased">
-{{ experience.companyaddress }}
+{{ experience.address }}
 </p>
 <div class="mt-4 flex items-center gap-5">
 <div class="flex items-center gap-1">
 <span class="h-3 w-3 rounded-full bg-blue-400"></span>
 <p class="block font-sans text-xs font-normal text-gray-700 antialiased">
-  {{experience.companystartDate}} - {{experience.companyendDate}}
+  {{experience.startDate}} - {{experience.endDate}}
 </p>
 </div>
 

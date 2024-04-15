@@ -37,7 +37,7 @@ export class EducationComponent {
   openModal = false;
   educations: any[] = [];
   qualification: string = '';
-  college: string = '';
+  collegeName: string = '';
   address: string = '';
   startDate: string = '';
   endDate: string = '';
@@ -49,10 +49,10 @@ export class EducationComponent {
     this.closeEduModal()
     const education = {
       qualification: form.value.qualification,
-      college: form.value.college,
+      collegeName: form.value.collegeName,
       address: form.value.address,
       startDate: form.value.startDate,
-      endDate: this.endDate
+      endDate: form.value.endDate
     };
     this.educations.push(education);
    
@@ -63,7 +63,7 @@ export class EducationComponent {
 
   clearForm() {
     this.qualification = '';
-    this.college = '';
+    this.collegeName = '';
     this.address = '';
     this.startDate = '';
     this.endDate = '';

@@ -38,18 +38,18 @@ export class ExperianceComponent {
   experiences: any[] = [];
   position:string='';
   companyName:string='';
-  companyaddress:string='';
-  companystartDate:string='';
-  companyendDate:string='';
+  address:string='';
+  startDate:string='';
+  endDate:string='';
 
   addQualification(form: NgForm){
 
     const experience = {
       position: form.value.position,
       companyName: form.value.companyName,
-      companyaddress: form.value.companyaddress,
-      companystartDate: form.value.companystartDate,
-      companyendDate: form.value.companyendDate
+      address: form.value.address,
+      startDate: form.value.startDate,
+      endDate: form.value.endDate
     };
     this.experiences.push(experience);
 
@@ -60,9 +60,9 @@ export class ExperianceComponent {
   clearQualificationForm(){
     this.position ='';
     this.companyName ='';
-    this.companyaddress ='';
-    this.companystartDate ='';
-    this.companyendDate ='';
+    this.address ='';
+    this.startDate ='';
+    this.endDate ='';
   }
 
   getData(){

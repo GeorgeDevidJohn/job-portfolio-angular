@@ -86,16 +86,16 @@
               >
               <input
                 type="text"
-                name="college"
+                name="collegeName"
                 ngModel
-                name="college"
-                #college="ngModel"
+                name="collegeName"
+                #collegeName="ngModel"
                 id="lastName"
                 class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"            
                 placeholder="Last Name"
                 required
               />
-              @if(college.invalid && college.touched){<span class="text-red-600"
+              @if(collegeName.invalid && collegeName.touched){<span class="text-red-600"
                 >College Required</span
               >}
             </div>
@@ -214,7 +214,7 @@
             </svg>
           </div>
         </div>
-        <h3 class="font-bold">{{ education.college }}</h3>
+        <h3 class="font-bold">{{ education.collegeName }}</h3>
         <p
           class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased"
         >

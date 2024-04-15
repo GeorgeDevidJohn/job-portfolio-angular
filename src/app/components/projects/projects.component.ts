@@ -43,7 +43,7 @@ export class ProjectsComponent {
 addProjects( form: NgForm){
 
   const project = {
-   title : form.value.title,
+    projectTitle : form.value.title,
     description:form.value.description,
     gitLink: form.value.gitLink,
     skills: form.value.skills,
